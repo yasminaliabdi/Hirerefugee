@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HireRefugee | Verified Skills Passport for Refugee Talent in Kenya</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="extra.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="container nav-content">
+      <div class="logo" onclick="showSection('landing')">Hire<span>Refugee</span></div>
+      <nav id="nav-links">
+        <button class="nav-btn" onclick="showSection('landing')">Home</button>
+        <button class="nav-btn" onclick="showSection('jobs')">Browse Jobs</button>
+        <button class="nav-btn" onclick="showSection('kenya-info')">Kenya Legal Guide</button>
+        <span id="auth-nav">
+          <button class="btn btn-outline" onclick="showSection('auth')">Login / Register</button>
+        </span>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div id="toast" class="toast hidden" role="status"></div>
+
+    <!-- 1. LANDING -->
+    <section id="section-landing" class="view-section">
+      <div class="hero">
+        <div class="hero-text">
+          <span class="badge">ILO Mini-Hackathon &bull; Skilled Refugee Inclusion</span>
+          <h1>Skills that can be proven, even when the paperwork is lost.</h1>
+          <p>
+            HireRefugee gives skilled refugees in Kenya a verified skills passport: credentials checked by trusted partners,
+            skills proven through short tests, and a work-readiness checklist, so employers can hire with confidence.
+          </p>
+          <div class="hero-actions">
+            <button class="btn btn-primary" onclick="showSection('auth')">Create free account</button>
+            <button class="btn btn-secondary" onclick="showSection('jobs')">Explore open roles</button>
+          </div>
+        </div>
+        <div class="hero-card">
+          <h3>Try the demo</h3>
+          <p class="muted small-note">One click login (password: <code>password123</code>)</p>
+          <div class="demo-buttons">
+            <button class="btn btn-primary" onclick="demoLogin('jean@example.com')">Refugee: Jean (unverified, lost papers)</button>
+            <button class="btn btn-primary" onclick="demoLogin('amina@example.com')">Refugee: Amina (verified, work-ready)</button>
+            <button class="btn btn-secondary" onclick="demoLogin('hr@savannahtech.co.ke')">Employer: Savannah Tech</button>
+            <button class="btn btn-secondary" onclick="demoLogin('verifier@partner.org')">Verifier: Skills Partner (NGO)</button>
+            <button class="btn btn-secondary" onclick="demoLogin('admin@hirerefugee.org')">Admin: Impact dashboard</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-row" id="landing-stats"></div>
+
+      <h2 class="section-title">Three barriers, three tracks</h2>
+      <div class="features-grid">
+        <div class="card track">
+          <div class="pills"><span class="pill">SDG 4</span><span class="pill">SDG 8</span></div>
+          <h3>1. Credential &amp; skills verification</h3>
+          <p>Upload a certificate, or when papers are missing, use a referee letter, portfolio or an NGO letter. Partners review it. Pass a skill test to earn a Verified Skill badge. Rejected? Get a clear bridging pathway.</p>
+        </div>
+        <div class="card track">
+          <div class="pills"><span class="pill">SDG 8</span><span class="pill">SDG 10</span><span class="pill">SDG 16</span></div>
+          <h3>2. Legal, financial &amp; work access</h3>
+          <p>A step-by-step work-readiness checklist (Refugee ID, KRA PIN, bank or M-Pesa, work permit, contract) and a hiring guide for employers, so hiring is legal and payment is smooth.</p>
+        </div>
+        <div class="card track">
+          <div class="pills"><span class="pill">SDG 8</span><span class="pill">SDG 10</span><span class="pill">SDG 17</span></div>
+          <h3>3. Local experience &amp; networks</h3>
+          <p>Skill-match percentages, returnships and fellowships posted by hiring partners, and mentorship requests, closing the "local experience" gap.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. JOBS -->
+    <section id="section-jobs" class="view-section hidden">
+      <div class="section-header">
+        <h2>Available opportunities</h2>
+        <p class="muted">Search by job title, location, or skill (e.g. Swahili, Excel, Nairobi). Log in as a refugee to see your match %.</p>
+      </div>
+      <div class="search-bar">
+        <input type="text" id="job-search-input" placeholder="Search jobs by title, skill, or location..." onkeyup="filterJobs()" />
+      </div>
+      <div id="jobs-list" class="grid-list"></div>
+    </section>
+
+    <!-- 3. KENYA GUIDE -->
+    <section id="section-kenya-info" class="view-section hidden">
+      <div class="section-header">
+        <h2>Kenya refugee employment &amp; documentation guide</h2>
+        <p class="muted">Key frameworks under the Refugees Act, 2021 and the Department of Refugee Services (DRS).</p>
+      </div>
+      <div class="info-grid">
+        <div class="card">
+          <h3>1. Right to work (Refugees Act, 2021)</h3>
+          <p>Recognized refugees in Kenya have the right to engage in gainful employment, start businesses, and access financial services, subject to the relevant permits and documents.</p>
+        </div>
+        <div class="card">
+          <h3>2. Essential identification</h3>
+          <ul>
+            <li><strong>Refugee ID card:</strong> issued by DRS to recognized refugees aged 18+.</li>
+            <li><strong>Proof of registration:</strong> for registered asylum seekers awaiting status determination.</li>
+            <li><strong>KRA PIN:</strong> needed for formal payroll and tax.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>3. Class M work permit</h3>
+          <p>Employers hiring recognized refugees apply for a <strong>Class M permit</strong> through the Immigration eFNS portal, on DRS recommendation. Check the current fee and requirements with Immigration before applying.</p>
+        </div>
+        <div class="card">
+          <h3>4. Recognising foreign qualifications</h3>
+          <ul>
+            <li><strong>KNQA</strong> (Kenya National Qualifications Authority) assesses and recognises foreign qualifications.</li>
+            <li><strong>CUE</strong> (Commission for University Education) recognises foreign university degrees.</li>
+            <li>No papers? Start with alternative evidence on HireRefugee, then ask a partner for help with the formal route.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>5. Getting paid</h3>
+          <p>Salary can be paid to a bank account or M-Pesa. Requirements for accepting a refugee ID differ by provider, so confirm with the provider and bring your Refugee ID and KRA PIN.</p>
+        </div>
+        <div class="card">
+          <h3>Official sources</h3>
+          <ul>
+            <li><a href="https://www.refugee.go.ke" target="_blank" rel="noopener">Department of Refugee Services (DRS)</a></li>
+            <li><a href="https://help.unhcr.org/kenya" target="_blank" rel="noopener">UNHCR Kenya Help</a></li>
+            <li><a href="https://www.immigration.go.ke" target="_blank" rel="noopener">Immigration Services</a></li>
+            <li><a href="https://www.knqa.go.ke" target="_blank" rel="noopener">KNQA</a> &bull; <a href="https://www.cue.or.ke" target="_blank" rel="noopener">CUE</a> &bull; <a href="https://www.kra.go.ke" target="_blank" rel="noopener">KRA</a></li>
+          </ul>
+          <p class="small-note muted">General guidance only, not legal advice. Rules and fees change; always confirm with the official source.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. AUTH -->
+    <section id="section-auth" class="view-section hidden">
+      <div class="auth-container">
+        <div class="card">
+          <h2>Login</h2>
+          <form id="login-form">
+            <label>Email</label>
+            <input type="email" id="login-email" autocomplete="email" required placeholder="amina@example.com" />
+            <label>Password</label>
+            <input type="password" id="login-password" autocomplete="current-password" required placeholder="password123" />
+            <button type="submit" class="btn btn-primary full-width">Login</button>
+          </form>
+        </div>
+        <div class="card">
+          <h2>Create account</h2>
+          <form id="register-form">
+            <label>Account role</label>
+            <select id="reg-role" onchange="toggleRegisterFields()">
+              <option value="refugee">Refugee job seeker</option>
+              <option value="employer">Employer / organization</option>
+            </select>
+            <label id="reg-name-label">Full name</label>
+            <input type="text" id="reg-name" autocomplete="name" required placeholder="Enter your name" />
+            <label>Email</label>
+            <input type="email" id="reg-email" autocomplete="email" required placeholder="you@example.com" />
+            <label>Password</label>
+            <input type="password" id="reg-password" autocomplete="new-password" required placeholder="Create a password" />
+            <label>Location (city / camp)</label>
+            <input type="text" id="reg-location" required placeholder="e.g. Nairobi, Kakuma, Dadaab" />
+            <div id="refugee-reg-fields">
+              <label>Key skills (comma-separated)</label>
+              <input type="text" id="reg-skills" placeholder="e.g. English, Swahili, Tailoring, Excel" />
+            </div>
+            <div id="employer-reg-fields" class="hidden">
+              <label>Industry</label>
+              <input type="text" id="reg-industry" placeholder="e.g. Hospitality, IT, Logistics" />
+            </div>
+            <button type="submit" class="btn btn-secondary full-width">Register</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. REFUGEE DASHBOARD -->
+    <section id="section-refugee-dash" class="view-section hidden">
+      <div class="section-header">
+        <h2>My skills passport</h2>
+        <p id="refugee-welcome" class="muted"></p>
+      </div>
+      <div class="stats-row" id="passport-stats"></div>
+
+      <div class="tabs" role="tablist">
+        <button class="tab-btn active" data-tab="profile" onclick="showTab('profile')">Profile</button>
+        <button class="tab-btn" data-tab="verify" onclick="showTab('verify')">Verification</button>
+        <button class="tab-btn" data-tab="ready" onclick="showTab('ready')">Work readiness</button>
+        <button class="tab-btn" data-tab="jobs" onclick="showTab('jobs')">Jobs &amp; applications</button>
+      </div>
+
+      <!-- Profile tab -->
+      <div id="tab-profile" class="tab-pane">
+        <div class="card narrow">
+          <h3>My profile &amp; CV</h3>
+          <form id="refugee-profile-form">
+            <label>Location</label>
+            <input type="text" id="prof-location" required />
+            <label>Skills (comma-separated, used for job matching)</label>
+            <input type="text" id="prof-skills" placeholder="English, Swahili, Data Entry, Excel" required />
+            <label>Education</label>
+            <input type="text" id="prof-education" placeholder="High school / Diploma / Degree" />
+            <label>Work experience</label>
+            <textarea id="prof-experience" rows="3" placeholder="Briefly describe past roles or volunteer work"></textarea>
+            <label>Documentation status (Kenya)</label>
+            <select id="prof-docStatus">
+              <option value="Refugee ID Holder">Refugee ID Holder</option>
+              <option value="Asylum Seeker Pass">Asylum Seeker Pass</option>
+              <option value="Valid Refugee ID & Class M Work Permit">Valid Refugee ID &amp; Class M Work Permit</option>
+            </select>
+            <label>Upload CV (PDF/DOC)</label>
+            <input type="file" id="prof-cv-file" accept=".pdf,.doc,.docx" />
+            <p class="small-note">Current CV on file: <strong id="current-cv-name">None</strong> <span class="muted">(demo stores the file name only)</span></p>
+            <button type="submit" class="btn btn-primary full-width">Save profile</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Verification tab -->
+      <div id="tab-verify" class="tab-pane hidden">
+        <div class="dash-grid">
+          <div>
+            <div class="card mb-20">
+              <h3>My credentials</h3>
+              <p class="muted small-note">Each credential is reviewed by a trusted verifier (NGO, training institution or admin).</p>
+              <div id="credentials-list"></div>
+              <div id="bridging-box"></div>
+            </div>
+            <div class="card">
+              <h3>Add a credential</h3>
+              <form id="credential-form">
+                <label>Qualification or experience</label>
+                <input type="text" id="cred-title" required placeholder="e.g. BSc Computer Science" />
+                <label>Institution / employer</label>
+                <input type="text" id="cred-institution" required placeholder="e.g. University of Goma" />
+                <label>Type</label>
+                <select id="cred-type">
+                  <option>Degree</option><option>Diploma</option><option>Certificate</option>
+                  <option>Training</option><option>Work Experience</option>
+                </select>
+                <label>Evidence available</label>
+                <select id="cred-evidence-type">
+                  <option>Original certificate copy</option>
+                  <option>Transcript</option>
+                  <option>Referee / employer letter</option>
+                  <option>NGO or school letter</option>
+                  <option>Portfolio / work sample link</option>
+                  <option>Missing: request alternative assessment</option>
+                </select>
+                <label>Evidence details (link, file name, or contact person)</label>
+                <textarea id="cred-evidence" rows="3" required placeholder="e.g. Portfolio link, or name and phone of a former manager who can confirm"></textarea>
+                <button type="submit" class="btn btn-primary full-width">Submit for verification</button>
+              </form>
+            </div>
+          </div>
+          <div>
+            <div class="card mb-20">
+              <h3>Skill tests: earn a Verified Skill badge</h3>
+              <p class="muted small-note">4 questions per skill. Score 3 or more to pass. No paperwork needed.</p>
+              <div id="skill-tests-list"></div>
+            </div>
+            <div class="card">
+              <h3>Ask for support</h3>
+              <p class="muted small-note">Fee waivers for assessments or exams, connectivity or tools, and mentorship. Subject to partner funding.</p>
+              <form id="support-form">
+                <select id="support-type">
+                  <option>Skills assessment fee waiver</option>
+                  <option>Certification / bridging exam fee waiver</option>
+                  <option>Internet data or work tools</option>
+                  <option>Mentorship (industry mentor match)</option>
+                </select>
+                <textarea id="support-note" rows="2" placeholder="Tell us briefly what you need" required style="margin-top:0.5rem;"></textarea>
+                <button type="submit" class="btn btn-secondary full-width">Send request</button>
+              </form>
+              <div id="support-list"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Readiness tab -->
+      <div id="tab-ready" class="tab-pane hidden">
+        <div class="card narrow">
+          <h3>Work-readiness checklist</h3>
+          <p class="muted small-note">Tick each step when done. Employers see your progress. (Self-reported in this demo; a full version would connect to partner confirmation.)</p>
+          <div id="readiness-bar"></div>
+          <div id="checklist"></div>
+        </div>
+      </div>
+
+      <!-- Jobs tab -->
+      <div id="tab-jobs" class="tab-pane hidden">
+        <div class="dash-grid">
+          <div class="card">
+            <h3>Recommended jobs</h3>
+            <p class="muted small-note">Ranked by how many required skills you have. A check mark means that skill is verified.</p>
+            <div id="matched-jobs-list"></div>
+          </div>
+          <div class="card">
+            <h3>My job applications</h3>
+            <div id="refugee-applications-list"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. EMPLOYER DASHBOARD -->
+    <section id="section-employer-dash" class="view-section hidden">
+      <div class="section-header">
+        <h2>Employer dashboard</h2>
+        <p id="employer-welcome" class="muted"></p>
+      </div>
+      <div class="dash-grid">
+        <div>
+          <div class="card mb-20">
+            <h3>Post a new job</h3>
+            <form id="post-job-form">
+              <label>Job title</label>
+              <input type="text" id="job-title" required placeholder="e.g. Customer Support Agent" />
+              <label>Location</label>
+              <input type="text" id="job-location" required placeholder="e.g. Nairobi or Remote" />
+              <label>Employment type</label>
+              <select id="job-type">
+                <option value="Full-time">Full-time</option>
+                <option value="Part-time">Part-time</option>
+                <option value="Contract">Contract</option>
+                <option value="Internship">Internship</option>
+                <option value="Fellowship / Returnship">Fellowship / Returnship</option>
+              </select>
+              <label>Monthly salary / stipend</label>
+              <input type="text" id="job-salary" placeholder="e.g. KES 35,000 / month" />
+              <label>Required skills (comma-separated)</label>
+              <input type="text" id="job-skills" required placeholder="e.g. English, Swahili, Customer Service" />
+              <label>Job description</label>
+              <textarea id="job-desc" rows="3" required placeholder="Describe responsibilities..."></textarea>
+              <button type="submit" class="btn btn-primary full-width">Publish job</button>
+            </form>
+          </div>
+          <div class="card">
+            <h3>Hiring a refugee in Kenya: your checklist</h3>
+            <ol class="guide-list">
+              <li>Confirm the candidate's Refugee ID or proof of registration.</li>
+              <li>Check their verified credentials and skills badges here.</li>
+              <li>Request the Class M permit through Immigration (eFNS), on DRS recommendation.</li>
+              <li>Ask the candidate to get a KRA PIN; register them for payroll, NSSF and SHIF.</li>
+              <li>Pay by bank or M-Pesa; keep a signed contract and payslips.</li>
+            </ol>
+            <p class="small-note muted">General guidance. Confirm current rules with Immigration, DRS and KRA.</p>
+          </div>
+        </div>
+        <div>
+          <div class="card mb-20">
+            <h3>My posted jobs</h3>
+            <div id="employer-jobs-list"></div>
+          </div>
+          <div class="card">
+            <h3>Candidate applications</h3>
+            <div class="filter-row">
+              <label class="check"><input type="checkbox" id="filter-verified" onchange="loadEmployerDashboard()" /> Verified only</label>
+              <label class="check"><input type="checkbox" id="filter-ready" onchange="loadEmployerDashboard()" /> Work-ready only</label>
+            </div>
+            <div id="employer-applications-list"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. VERIFIER DASHBOARD -->
+    <section id="section-verifier-dash" class="view-section hidden">
+      <div class="section-header">
+        <h2>Verifier dashboard</h2>
+        <p class="muted">Review credentials and evidence. Approve what you can confirm; reject with a note so the candidate gets a bridging pathway.</p>
+      </div>
+      <div class="dash-grid">
+        <div class="card"><h3>Pending credentials</h3><div id="verifier-queue"></div></div>
+        <div>
+          <div class="card mb-20"><h3>Support requests</h3><div id="verifier-support-queue"></div></div>
+          <div class="card"><h3>Recently reviewed</h3><div id="verifier-history"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. ADMIN DASHBOARD -->
+    <section id="section-admin-dash" class="view-section hidden">
+      <div class="section-header">
+        <h2>Admin: impact &amp; oversight</h2>
+        <p class="muted">Platform-wide impact metrics, aligned with SDGs 4, 8, 10, 16 and 17.</p>
+      </div>
+      <div class="stats-row" id="admin-stats"></div>
+      <div class="card mb-20">
+        <h3>Scalability by design</h3>
+        <ul class="guide-list">
+          <li><strong>Automated skill tests</strong> verify skills with no manual work per candidate.</li>
+          <li><strong>Partner verifiers</strong> (NGOs, colleges) share the review work across locations.</li>
+          <li><strong>Country settings</strong> (permit rules, checklist steps) are data, so a new country is a configuration change.</li>
+        </ul>
+      </div>
+      <div class="dash-grid mb-20">
+        <div class="card"><h3>Credential review queue</h3><div id="admin-verifier-queue"></div></div>
+        <div class="card"><h3>Support requests</h3><div id="admin-support-queue"></div></div>
+      </div>
+      <div class="card mb-20">
+        <h3>Registered users</h3>
+        <div class="table-wrapper"><table>
+          <thead><tr><th>Name / organization</th><th>Email</th><th>Role</th><th>Location</th><th>Action</th></tr></thead>
+          <tbody id="admin-users-table"></tbody>
+        </table></div>
+      </div>
+      <div class="card mb-20">
+        <h3>All job postings</h3>
+        <div class="table-wrapper"><table>
+          <thead><tr><th>Title</th><th>Company</th><th>Location</th><th>Required skills</th><th>Action</th></tr></thead>
+          <tbody id="admin-jobs-table"></tbody>
+        </table></div>
+      </div>
+      <div class="card mb-20">
+        <h3>All job applications</h3>
+        <div class="table-wrapper"><table>
+          <thead><tr><th>Applicant</th><th>Job title</th><th>Company</th><th>CV</th><th>Status</th></tr></thead>
+          <tbody id="admin-apps-table"></tbody>
+        </table></div>
+      </div>
+      <button class="btn btn-danger" onclick="if(confirm('Reset all demo data?')) resetDemoData()">Reset demo data</button>
+    </section>
+  </main>
+
+  <!-- Skill test modal -->
+  <div id="test-modal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-box">
+      <div id="test-content"></div>
+    </div>
+  </div>
+
+  <!-- Job apply modal -->
+  <div id="apply-modal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-box">
+      <div id="apply-content"></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p>HireRefugee &bull; ILO Mini-Hackathon prototype &bull; SDG 4 &bull; 8 &bull; 10 &bull; 16 &bull; 17 &bull; Built with HTML, CSS and vanilla JS</p>
+    </div>
+  </footer>
+
+  <script src="mock-api.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
